@@ -57,7 +57,13 @@
        <br/>
         请输入要转换的类型名 <input class="typename" placeholder="请输入要转换的类型名" value="demoType" />
         <button onclick="start()">转换</button>
-    </section>
+        <br/><br/>
+<pre style="color: red;">       
+注意：
+ 1. 注意：为了识别正确的类型，作为参数的数据示例的字段值不能为undefined或者null，给上一个任何的代表类型的值都可以。
+ 2. 对于对象数组数据，在将其解析为grphql类型数据结构时，只需要给出下标0对应的元素对象即可（当然：字段值不能为null或者undefined)
+</pre>   
+</section>
     <script>
         let jsonStr = JSON.stringify({
             code: 200,
