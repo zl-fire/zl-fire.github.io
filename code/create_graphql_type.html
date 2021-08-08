@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自动转换graphql类型定义</title>
-    <script src="https://cdn.jsdelivr.net/npm/zl-create-graphql-type@1.0.2/create_graphql_type.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/zl-create-graphql-type@1.0.3/create_graphql_type.js"></script>
     <style>
         html,
         body {
@@ -61,7 +61,8 @@
 <pre style="color: red;">       
 注意：
  1. 注意：为了识别正确的类型，作为参数的数据示例的字段值不能为undefined或者null，给上一个任何的代表类型的值都可以。(不合格的数据会在控制台提示报错)
- 2. 对于对象数组数据，在将其解析为grphql类型数据结构时，只需要给出下标0对应的元素对象即可（当然：字段值不能为null或者undefined)
+ 2. 对于对象数组数据，在将其解析为grphql类型数据结构时，只需要给出一个对象元素信息即可，解析器默认也只会解析第一个元素信息生成对应类型（当然：字段值不能为null或者undefined)
+ 3. 对于数组类型，请不要给空数组[],请给上一个数组元素，从而让解析器识别数组元素的对应类型。
 </pre>   
 </section>
     <script>
@@ -101,7 +102,7 @@
                    return;
                 }
             }catch(err){
-              alert("要转换的数据结构应该是一个json数据结构,请检查是否有多余的逗号等符号！");
+              alert("要转换的数据结构应该是一个json数据结构,请检查是否有多余的逗号等符号 或者 json字段名是否没有包裹引号?");
               console.error(err);
               return;
             }
