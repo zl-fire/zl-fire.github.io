@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自动转换graphql类型定义</title>
+    <script src="https://cdn.jsdelivr.net/npm/zl-create-graphql-type@1.0.1/create_graphql_type.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .con {
+            text-align: center;
+            height: 500px;
+        }
+
+        .con textarea {
+            text-align: left;
+            border: 1px solid gray;
+            display: inline-block;
+            width: 45%;
+            height: 100%;
+        }
+
+        .left {
+            background-color: rgb(235, 230, 225);
+        }
+
+        .right {
+            background-color: rgb(226, 209, 191);
+        }
+
+        .secbtn {
+            padding: 20px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>自动转换graphql类型定义</h3>
+    <section class="con">
+        <textarea class="left">此处填入要转换的数据结构...</textarea>
+        <textarea class="right">这里将显示生成的graphql类型</textarea>
+    </section>
+    <br/>
+    <section class="secbtn">
+        输入类型 or 输出类型：<input class="typeway" placeholder="输入类型 or 输出类型" value="type" />
+        <span style="opacity: .5;">(input:表示输入类型，用于参数。 type:表示普通类型，用于返回值)</span>
+       <br/>
+        请输入要转换的类型名 <input class="typename" placeholder="请输入要转换的类型名" value="demoType" />
+        <button onclick="start()">转换</button>
+    </section>
+    <script>
+        let jsonStr = JSON.stringify({
+            code: 200,
+            data: {
+                ext: {},
+                size: 10,
+                items: [
+                    {
+                        recommendType: 'ali',
+                        index: 1,
+                        style: 'word_1',
+                        strategyId: 'alirecmd',
+                        productType: 'hot_word'
+                    }
+                ]
+            },
+            message: 'success'
+        }, null, 4);
+        document.querySelector(".left").value = jsonStr;
+        start()
+        function start() {
+            // 获取输入框的值
+            let typeway = document.querySelector(".typeway").value.trim();
+            let typename = document.querySelector(".typename").value.trim();
+            // 获取左侧textarea的值
+            let texVal = document.querySelector(".left").value;
+            if (!typeway || !typename || !texVal ) {
+                alert("类型方式，类型名，要转换数据 ，都不能为空");
+                return;
+            }
+            try{
+                let jsonv=JSON.parse(texVal);
+                if(jsonv instanceof Array){
+                   alert("要转换的数据结构应该是一个json对象结构，不能只是一个数组");
+                   return;
+                }
+            }catch(err){
+              alert("要转换的数据结构应该是一个json数据结构,请检查是否有多余的逗号等符号！");
+              console.error(err);
+              return;
+            }
+            // 构建参数对象
+            let parObj = {
+                "typeObj": JSON.parse(texVal),
+                "typeWay": typeway,
+                "typeName": typename
+            }
+            // 执行
+            createGraphqlType(parObj)
+                .then((d) => {
+                    // d为成的结果
+                    console.log('执行完成,生成的graphql类型如下：\n', d);
+                    document.querySelector(".right").value = d;
+                })
+        }
+
+    </script>
+</body>
+
+</html>
