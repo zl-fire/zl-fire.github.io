@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自动转换graphql类型定义</title>
-    <script src="https://cdn.jsdelivr.net/npm/zl-create-graphql-type@1.0.2/create_graphql_type.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/zl-create-graphql-type@1.0.3/create_graphql_type.js"></script>
     <style>
         html,
         body {
@@ -101,7 +101,7 @@
                    return;
                 }
             }catch(err){
-              alert("要转换的数据结构应该是一个json数据结构,请检查是否有多余的逗号等符号！");
+              alert("要转换的数据结构应该是一个json数据结构,请检查是否有多余的逗号等符号 或者 json字段名是否没有包裹引号?");
               console.error(err);
               return;
             }
